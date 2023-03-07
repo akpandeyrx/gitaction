@@ -1,5 +1,8 @@
 name: my first action
-on: [push]
+on:
+ push: 
+   branches:
+      - gh-action
 jobs:
   build:
     runs-on: ubuntu-latest
