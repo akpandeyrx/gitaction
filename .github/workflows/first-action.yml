@@ -5,6 +5,7 @@ on:
       - gh-action
 jobs:
   build:
+    if: contains(github.event.pull_request.labels.*.name, 'MergePR')
     runs-on: ubuntu-latest
     strategy:
       matrix:
