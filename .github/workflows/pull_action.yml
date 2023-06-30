@@ -17,14 +17,15 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-
-    - name: Build and push
+    - name: Build Docker images
       uses: docker/build-push-action@v4
       with:
-       push: false
-       tags: |
-              test:latest
-              outputs: type=docker,dest=/tmp/test.tar
+          tags: test_image:latest
+          push: false
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          outputs: type=docker,dest=/tmp/test.tar
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
