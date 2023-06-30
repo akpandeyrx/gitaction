@@ -33,5 +33,18 @@ jobs:
           name: docker-image
           path: /tmp/test.tar
     
-          
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+            name: docker-image
+            path: /tmp
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2  
+
+    - name: Running the Docker Image
+      run: |
+         echo "Running Docker Image"
+          docker run -it test_image:latest "dpkg --get-selections | grep vim" 
+
         
