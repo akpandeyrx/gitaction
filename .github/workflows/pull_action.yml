@@ -47,6 +47,6 @@ jobs:
     - name: Running the Docker Image
       run: |
          echo "Running Docker Image"
-          docker run -dit test_image:latest cat install.sh
+          docker run -dit test_image:latest cat /app/install.sh
 
         
