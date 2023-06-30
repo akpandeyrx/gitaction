@@ -1,1 +1,1 @@
-apt update; apt install wget
+apt update; apt install wget -y
