@@ -11,9 +11,32 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: installing python dependencies
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: installing 
       run: |
           chmod +x ./install.sh
           bash ./install.sh
+  
+          - name: Set up Docker Buildx
+          uses: docker/setup-buildx-action@v2
+
+
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+       push: false
+       tags: |
+              test:latest
+              cache-from: type=gha
+              cache-to: type=gha,mode=max
+              outputs: type=docker,dest=/tmp/test.tar
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+          name: docker-image
+          path: /tmp/test.tar
+    
           
         
