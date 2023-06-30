@@ -38,7 +38,9 @@ jobs:
       with:
             name: docker-image
             path: /tmp
-      
+    - name: Load Docker image
+      run: |
+           docker load --input /tmp/test.tar
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2  
 
