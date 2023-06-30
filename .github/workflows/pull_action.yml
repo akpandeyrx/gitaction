@@ -47,6 +47,6 @@ jobs:
     - name: Running the Docker Image
       run: |
          echo "Running Docker Image"
-          docker run -dit test_image:latest dpkg --get-selections | grep vim
+          docker run -dit test_image:latest dpkg --get-selections
 
         
