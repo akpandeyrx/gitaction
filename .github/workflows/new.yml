@@ -8,8 +8,9 @@ on:
       - develop
 
 env:
-    URL: pandeyak1991
-    ECR_REPOSITORY: test
+    # URL: pandeyak1991
+    # ECR_REPOSITORY: test
+    REGISTRY_IMAGE: pandeyak1991/test
 
 
 jobs:
@@ -20,49 +21,81 @@ jobs:
       matrix:
         platform:
           - linux/amd64
+          - linux/arm/v6
+          - linux/arm/v7
           - linux/arm64
 
     # outputs:
     #   imagePushed: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
     
     steps:
-     - name: ecr login
-       id: login-ecr
-       run: |
-           docker login --username pandeyak1991 --password pandeyji89 
-
-     - uses: docker/metadata-action@v4
-       id: metadata
-       with:
-         images: pandeyak1991/${{env.ECR_REPOSITORY}}
-         flavor: suffix=-${{ matrix.platform }}
-
-     - uses: docker/build-push-action@v3
-       with:
-        push: true
-        tags: ${{ steps.metadata.outputs.tags }}
-        # labels: ${{ steps.metadata.outputs.labels }}
-
-         
-  build-multi-architecture:
-   needs:
-       - build
-   runs-on: ubuntu-latest
-
-   steps:
-      - name: ecr login
+     -
+        name: Checkout
+        uses: actions/checkout@v3
+     -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY_IMAGE }}
+     -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+     -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2   
+        
+     -  name: ecr login
         id: login-ecr
         run: |
-           docker login --username pandeyak1991 --password pandeyji89 
+            docker login --username pandeyak1991 --password pandeyji89 
 
-      - uses: docker/metadata-action@v4
-        id: metadata
-        with:
-         images: pandeyak1991/${{ env.ECR_REPOSITORY }}
+     -
+       name: Build and push by digest
+       id: build
+       uses: docker/build-push-action@v4
+       with:
+            context: .
+            platforms: ${{ matrix.platform }}
+            labels: ${{ steps.meta.outputs.labels }}
+            outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
+     -
+       name: Export digest
+       run: |
+            mkdir -p /tmp/digests
+            digest="${{ steps.build.outputs.digest }}"
+            touch "/tmp/digests/${digest#sha256:}"
+     -
+      name: Upload digest
+      uses: actions/upload-artifact@v3
+      with:
+            name: digests
+            path: /tmp/digests/*
+            if-no-files-found: error
+            retention-days: 1
 
-      - uses: int128/docker-manifest-create-action@v1
-        with:
-         tags: ${{ steps.metadata.outputs.tags }}
-         suffixes: |
-          -linux-amd64
-          -linux-arm64
+     -
+      name: Download digests
+      uses: actions/download-artifact@v3
+      with:
+       name: digests
+       path: /tmp/digests
+     -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    #  -
+      # name: Docker meta
+      # id: meta
+      # uses: docker/metadata-action@v4
+      # with:
+      #   images: ${{ env.REGISTRY_IMAGE }}
+     -
+        name: Create manifest list and push
+        working-directory: /tmp/digests
+        run: |
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
+     -
+        name: Inspect image
+        run: |
+          docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }}
