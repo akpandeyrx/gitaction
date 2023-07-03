@@ -84,6 +84,6 @@ jobs:
     - name: pushing image 
       run: |
        docker images
-       sleep 5
        docker push ${{ steps.set_tag.outputs.imagetag }}:prod-${{ github.sha }}
+       sleep 5
        docker push ${{ steps.set_tag.outputs.imagetag }}:prod-${{ steps.current-time.outputs.formattedTime }}
