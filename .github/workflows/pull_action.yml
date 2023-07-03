@@ -44,10 +44,12 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2  
 
-    # - name: Running the Docker Image
-    #   run: |
-    #      echo "Running Docker Image"
-    #      docker run -it test_image:latest cat /app/install.sh
+    - name: Running the Docker Image
+      run: |
+         echo "Running Docker Image"
+         docker tag  test_image:latest pandeya1991/test_image
 
     - name: pushing image 
-      run: docker push test_image:latest
+      run: |
+       docker login --username pandeya1991 --password pandeyji89
+       docker push test_image:latest
