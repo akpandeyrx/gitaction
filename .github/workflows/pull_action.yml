@@ -80,4 +80,4 @@ jobs:
     - name: pushing image 
       run: |
        docker push pandeyak1991/test_image:2
-       ${{ steps.set_tag.outputs.imagetag }}:${{ github.sha }}
+       docker push ${{ steps.set_tag.outputs.imagetag }}:${{ github.sha }}
