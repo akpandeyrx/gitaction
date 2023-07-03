@@ -20,9 +20,9 @@ jobs:
       matrix:
         platform:
           - linux/amd64
-          # - linux/arm/v6
-          # - linux/arm/v7
-          # - linux/arm64
+          - linux/arm/v6
+          - linux/arm/v7
+          - linux/arm64
     # outputs:
     #   imagePushed: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
     
@@ -65,5 +65,7 @@ jobs:
         with:
          tags: ${{ steps.metadata.outputs.tags }}
          suffixes: |
-             -amd64
-             -arm64     
+          - linux/amd64
+          - linux/arm/v6
+          - linux/arm/v7
+          - linux/arm64   
