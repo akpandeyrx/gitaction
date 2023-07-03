@@ -21,7 +21,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      
+
+    - name: Get current time
+      uses: josStorer/get-current-time@v2
+      id: current-time
+      with:
+          format: YYYYMMDD-HHmmss      
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
@@ -47,6 +53,7 @@ jobs:
           tags: |
             test_image:latest
             ${{ steps.set_tag.outputs.imagetag }}:${{ github.sha }}
+            ${{ steps.set_tag.outputs.imagetag }}:${{ steps.current-time.outputs.formattedTime }}
           push: false
           load: true
           cache-from: type=gha
@@ -71,10 +78,10 @@ jobs:
       uses: docker/setup-buildx-action@v2  
     
 
-    - name: Running the Docker Image
-      run: |
-         echo "Running Docker Image"
-         docker tag  test_image:latest pandeyak1991/test_image:2
+    # - name: Running the Docker Image
+    #   run: |
+    #      echo "Running Docker Image"
+    #      docker tag  test_image:latest pandeyak1991/test_image:2
          
     
 
@@ -82,5 +89,6 @@ jobs:
       run: |
        docker images
        docker push pandeyak1991/test_image:2
-       sleep 15
+       sleep 5
        docker push ${{ steps.set_tag.outputs.imagetag }}:${{ github.sha }}
+       docker push ${{ steps.set_tag.outputs.imagetag }}:${{ steps.current-time.outputs.formattedTime }}
