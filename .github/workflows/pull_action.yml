@@ -73,7 +73,8 @@ jobs:
     - name: Running the Docker Image
       run: |
          echo "Running Docker Image"
-         docker tag  test_image:latest pandeyak1991/test_image:2
+         docker images 
+        #  docker tag  test_image:latest pandeyak1991/test_image:2
     
 
     - name: pushing image 
