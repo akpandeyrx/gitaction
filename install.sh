@@ -1,1 +1,1 @@
-apt update; apt install vim -y
+apt update; apt wget vim -y
