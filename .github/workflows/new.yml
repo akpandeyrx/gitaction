@@ -46,6 +46,11 @@ jobs:
    runs-on: ubuntu-latest
 
    steps:
+      - name: ecr login
+        id: login-ecr
+        run: |
+           docker login --username pandeyak1991 --password pandeyji89 
+
       - uses: docker/metadata-action@v4
         id: metadata
         with:
