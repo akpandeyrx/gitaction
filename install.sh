@@ -1,1 +1,1 @@
-apt update; apt wget vim -y
+apt update; apt insgtall wget -y
