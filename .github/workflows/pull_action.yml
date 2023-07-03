@@ -50,4 +50,4 @@ jobs:
     #      docker run -it test_image:latest cat /app/install.sh
 
     - name: pushing image 
-      run: dockr push test_image:latest
+      run: docker push test_image:latest
