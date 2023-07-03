@@ -65,7 +65,12 @@ jobs:
             # push-by-digest: true
             outputs: type=docker,dest=/tmp/test.tar
             # name-canonical: true
-            
+     - 
+        name: Export digest
+        run: |
+          mkdir -p /tmp/digests
+          digest="${{ steps.build.outputs.digest }}"
+          touch "/tmp/digests/${digest#sha256:}"            
      - name: Upload artifact
        uses: actions/upload-artifact@v3
        with:
