@@ -15,6 +15,14 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - linux/amd64
+          - linux/arm/v6
+          - linux/arm/v7
+          - linux/arm64
     # outputs:
     #   imagePushed: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
     
@@ -30,6 +38,9 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
 
     - name: ecr login
       id: login-ecr
@@ -49,41 +60,68 @@ jobs:
 
     - name: Build Docker images
       uses: docker/build-push-action@v4
+      id: build
       with:
           tags: |
             ${{ steps.set_tag.outputs.imagetag }}:prod-${{ github.sha }}
             ${{ steps.set_tag.outputs.imagetag }}:prod-${{ steps.current-time.outputs.formattedTime }}
-          push: false
+          push: true
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
           outputs: type=docker,dest=/tmp/test.tar
+          push-by-digest: true
+          name-canonical: true
+    - name: Export digest
+      run: |
+          mkdir -p /tmp/digests
+          digest="${{ steps.build.outputs.digest }}"
+          touch "/tmp/digests/${digest#sha256:}"
 
-    - name: Upload artifact
+
+    # - name: Upload artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #       name: docker-image
+    #       path: /tmp/test.tar
+    - name: Upload digest
       uses: actions/upload-artifact@v3
       with:
-          name: docker-image
-          path: /tmp/test.tar
-    
+       name: digests
+       path: /tmp/digests/*
+       if-no-files-found: error
+       retention-days: 1    
+
     - name: Download artifact
       uses: actions/download-artifact@v3
       with:
-            name: docker-image
-            path: /tmp
-    - name: Load Docker image
-      run: |
-           docker load --input /tmp/test.tar
+            name: digests
+            path: /tmp/digests
+
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+       images: ${{ env.ECR_REPOSITORY }}
+
+    # - name: Load Docker image
+    #   run: |
+    #        docker load --input /tmp/test.tar
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2  
     
-
+    - name: Create manifest list and push
+      working-directory: /tmp/digests
+      run: |
+        docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+          $(printf '${{ env.ECR_REPOSITORY }}@sha256:%s ' *)
 
          
     
 
-    - name: pushing image 
-      run: |
-       docker images
-       docker push ${{ steps.set_tag.outputs.imagetag }}:prod-${{ github.sha }}
-       sleep 5
-       docker push ${{ steps.set_tag.outputs.imagetag }}:prod-${{ steps.current-time.outputs.formattedTime }}
+    # - name: pushing image 
+    #   run: |
+    #    docker images
+    #    docker push ${{ steps.set_tag.outputs.imagetag }}:prod-${{ github.sha }}
+    #    sleep 5
+    #    docker push ${{ steps.set_tag.outputs.imagetag }}:prod-${{ steps.current-time.outputs.formattedTime }}
