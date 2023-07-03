@@ -52,4 +52,4 @@ jobs:
     - name: pushing image 
       run: |
        docker login --username pandeyak1991 --password pandeyji89
-       docker push test_image:latest
+       docker push pandeya1991/test_image:1
