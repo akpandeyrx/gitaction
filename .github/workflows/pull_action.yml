@@ -8,7 +8,8 @@ on:
       - develop
 
 env:
-    ECR_REPOSITORY: pandeyak1991
+    URL: pandeyak1991
+    ECR_REPOSITORY: test
 
 
 jobs:
@@ -34,7 +35,7 @@ jobs:
       run: |
          ecrlogin="${{steps.login-ecr.outcome }}"
          if [ "$ecrlogin" == success ]; then
-           echo "imagetag=${{ env.ECR_REPOSITORY }}" >> $GITHUB_OUTPUT
+           echo "imagetag=${{ env.URL }}/${{ env.ECR_REPOSITORY }}" >> $GITHUB_OUTPUT
          else
            echo "imagetag=testbuildimage" >> $GITHUB_OUTPUT
          fi
