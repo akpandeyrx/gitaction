@@ -66,6 +66,6 @@ jobs:
          tags: ${{ steps.metadata.outputs.tags }}
          suffixes: |
           -amd64
-          -arm/v6
-          -arm/v7
+          -arm_v6
+          -arm_v7
           -arm64   
