@@ -66,10 +66,10 @@ jobs:
             ${{ steps.set_tag.outputs.imagetag }}:prod-${{ github.sha }}
             ${{ steps.set_tag.outputs.imagetag }}:prod-${{ steps.current-time.outputs.formattedTime }}
           push: true
-          # load: true
+          load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          outputs: type=docker,dest=/tmp/test.tar
+          # outputs: type=docker,dest=/tmp/test.tar
           push-by-digest: true
           name-canonical: true
 
