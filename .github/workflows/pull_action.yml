@@ -74,7 +74,8 @@ jobs:
       run: |
          echo "Running Docker Image"
          docker images 
-        #  docker tag  test_image:latest pandeyak1991/test_image:2
+         docker tag  test_image:latest pandeyak1991/test_image:2
+         ${{ steps.set_tag.outputs.imagetag }}:${{ github.sha }}
     
 
     - name: pushing image 
