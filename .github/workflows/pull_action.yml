@@ -44,9 +44,10 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2  
 
-    - name: Running the Docker Image
-      run: |
-         echo "Running Docker Image"
-         docker run -it test_image:latest cat /app/install.sh
+    # - name: Running the Docker Image
+    #   run: |
+    #      echo "Running Docker Image"
+    #      docker run -it test_image:latest cat /app/install.sh
 
-        
+    - name: pushing image 
+      run: dockr push test_image:latest
