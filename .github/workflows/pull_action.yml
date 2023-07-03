@@ -6,9 +6,16 @@ on:
       - master
       - release*
       - develop
+
+env:
+    ECR_REPOSITORY: pandeyak1991
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    # outputs:
+    #   imagePushed: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
     
     steps:
     - name: Checkout
@@ -17,10 +24,28 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
+    - name: ecr login
+      id: login-ecr
+      run: |
+       docker login --username pandeyak1991 --password pandeyji89 
+
+    - name: Set Tag
+      id: set_tag
+      run: |
+         ecrlogin="${{steps.login-ecr.outcome }}"
+         if [ "$ecrlogin" == success ]; then
+           echo "imagetag=${{ env.ECR_REPOSITORY }}" >> $GITHUB_OUTPUT
+         else
+           echo "imagetag=testbuildimage" >> $GITHUB_OUTPUT
+         fi
+
+
     - name: Build Docker images
       uses: docker/build-push-action@v4
       with:
-          tags: test_image:latest
+          tags: |
+            test_image:latest
+            ${{ steps.set_tag.outputs.imagetag }}:${{ github.sha }}
           push: false
           load: true
           cache-from: type=gha
@@ -43,13 +68,14 @@ jobs:
            docker load --input /tmp/test.tar
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2  
+    
 
     - name: Running the Docker Image
       run: |
          echo "Running Docker Image"
          docker tag  test_image:latest pandeyak1991/test_image:2
+    
 
     - name: pushing image 
       run: |
-       docker login --username pandeyak1991 --password pandeyji89
        docker push pandeyak1991/test_image:2
