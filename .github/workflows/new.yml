@@ -59,12 +59,12 @@ jobs:
             tags: test:prod-${{ github.sha }}
             # platforms: ${{ matrix.platform }}
             # labels: ${{ steps.meta.outputs.labels }}
-            push: true
+            push: false
             cache-from: type=gha
             cache-to: type=gha,mode=max
-            push-by-digest: true
+            # push-by-digest: true
             outputs: type=docker,dest=/tmp/test.tar
-            name-canonical: true
+            # name-canonical: true
             
      - name: Upload artifact
        uses: actions/upload-artifact@v3
@@ -118,6 +118,9 @@ jobs:
        -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+       - 
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
        -
         name: Docker meta
         id: meta
