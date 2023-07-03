@@ -19,10 +19,10 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-          - linux/amd64
-          - linux/arm/v6
-          - linux/arm/v7
-          - linux/arm64
+          - amd64
+          - arm/v6
+          - arm/v7
+          - arm64
     # outputs:
     #   imagePushed: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
     
