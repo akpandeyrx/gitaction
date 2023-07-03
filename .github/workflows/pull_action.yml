@@ -88,7 +88,6 @@ jobs:
     - name: pushing image 
       run: |
        docker images
-       docker push pandeyak1991/test_image:2
        sleep 5
        docker push ${{ steps.set_tag.outputs.imagetag }}:${{ github.sha }}
        docker push ${{ steps.set_tag.outputs.imagetag }}:${{ steps.current-time.outputs.formattedTime }}
