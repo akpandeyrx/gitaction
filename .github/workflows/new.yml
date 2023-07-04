@@ -56,11 +56,10 @@ jobs:
           push: false
           platforms: linux/amd64,linux/arm64
           tags: |
-            ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
             ${{ env.REGISTRY_IMAGE}}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          outputs: type=oci,dest=/tmp/test.tar
+          outputs: type=docker,dest=/tmp/test.tar
 
       #  - 
       #     name: Export digest
@@ -73,7 +72,7 @@ jobs:
          uses: actions/upload-artifact@v3
          with:
            name: image
-           path: /tmp/*
+           path: /tmp/
            if-no-files-found: error
            retention-days: 1
   
