@@ -54,7 +54,7 @@ jobs:
          with:
               push: false
               tags: |
-                ${{ env.ECR_REPOSITORY }}:latest
+                ${{ env.REGISTRY_IMAGE }}:latest
               cache-from: type=gha
               cache-to: type=gha,mode=max
               outputs: type=docker,dest=/tmp/test.tar
