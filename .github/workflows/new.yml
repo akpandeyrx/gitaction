@@ -68,6 +68,7 @@ jobs:
                 name: docker-image
                 path: /tmp/test.tar
     merge:
+       name: pushing-merge
        runs-on: ubuntu-latest
        needs:
          - build
@@ -98,4 +99,4 @@ jobs:
 
          - name: tagging for env
            run: |
-              docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{job.merge.environment}}-${{github.sha}}
+              docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{job.merge.name}}-${{github.sha}}
