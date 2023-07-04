@@ -60,7 +60,7 @@ jobs:
             ${{ env.REGISTRY_IMAGE}}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          outputs: type=docker,dest=/tmp/test.tar
+          outputs: type=oci,dest=/tmp/test.tar
 
       #  - 
       #     name: Export digest
