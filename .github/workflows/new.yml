@@ -20,10 +20,10 @@ jobs:
         matrix:
           platform:
             - linux/amd64
-            - linux/arm/v7
-            - linux/arm64/v8
-            - linux/s390x
-            - linux/ppc64le
+            # - linux/arm/v7
+            # - linux/arm64/v8
+            # - linux/s390x
+            # - linux/ppc64le
   
       # outputs:
       #   imagePushed: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
@@ -55,7 +55,7 @@ jobs:
          id: build
          uses: docker/build-push-action@v4
          with:
-              tags: test:${{ github.sha }}
+              # tags: test:${{ github.sha }}
               platforms: ${{ matrix.platform }}
               # labels: ${{ steps.meta.outputs.labels }}
               push: true
