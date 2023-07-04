@@ -48,25 +48,19 @@ jobs:
           run: |
               docker login --username pandeyak1991 --password pandeyji89 
   
-       -
-         name: Build and push by digest
-         id: build
+       
+       - name: Build and push
          uses: docker/build-push-action@v4
          with:
-          push: false
-          platforms: linux/amd64,linux/arm64
-          tags: |
-            ${{ env.REGISTRY_IMAGE}}:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          outputs: type=docker,dest=/tmp/test.tar
+              push: false
+              tags: |
+                ${{ env.ECR_REPOSITORY }}:latest
+              cache-from: type=gha
+              cache-to: type=gha,mode=max
+              outputs: type=docker,dest=/tmp/test.tar
 
-      #  - 
-      #     name: Export digest
-      #     run: |
-      #       mkdir -p /tmp/digests
-      #       digest="${{ steps.build.outputs.digest }}"
-      #       touch "/tmp/digests/${digest#sha256:}"            
+
+         
 
        - name: Upload artifact
          uses: actions/upload-artifact@v3
