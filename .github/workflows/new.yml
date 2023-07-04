@@ -57,6 +57,7 @@ jobs:
           tags: |
             ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
             ${{ env.REGISTRY_IMAGE}}:latest
+          platforms: ${{ matrix.platform }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
               # tags: |
