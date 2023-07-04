@@ -59,7 +59,7 @@ jobs:
                ${{env.REGISTRY_IMAGE}}:${{ github.sha }}
               platforms: ${{ matrix.platform }}
               # labels: ${{ steps.meta.outputs.labels }}
-              push: true
+              # push: true
               cache-from: type=gha
               cache-to: type=gha,mode=max
               # push-by-digest: true
