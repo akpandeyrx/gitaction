@@ -62,7 +62,7 @@ jobs:
               cache-from: type=gha
               cache-to: type=gha,mode=max
               push-by-digest: true
-              outputs: type=docker,dest=/tmp/test.tar
+              # outputs: type=docker,dest=/tmp/test.tar
               name-canonical: true
        - 
           name: Export digest
