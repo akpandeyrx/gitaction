@@ -108,4 +108,4 @@ jobs:
 
          - name: tagging for env
            run: |
-              docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{merge.environment}}-${{github.sha}}
+              docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{job.merge.environment}}-${{github.sha}}
