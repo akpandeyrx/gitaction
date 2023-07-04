@@ -72,7 +72,9 @@ jobs:
        runs-on: ubuntu-latest
        needs:
          - build
-       environment: NonProd
+       environment: nonprod
+      #  env:
+      #     deployto: "nonprod"
        steps:
   
     
