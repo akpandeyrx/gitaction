@@ -55,7 +55,8 @@ jobs:
          id: build
          uses: docker/build-push-action@v4
          with:
-              # tags: test:${{ github.sha }}
+              tags: |
+               ${{env.REGISTRY_IMAGE}}:${{ github.sha }}
               platforms: ${{ matrix.platform }}
               # labels: ${{ steps.meta.outputs.labels }}
               push: true
