@@ -56,14 +56,14 @@ jobs:
          uses: docker/build-push-action@v4
          with:
               tags: test:prod-${{ github.sha }}
-              # platforms: ${{ matrix.platform }}
+              platforms: ${{ matrix.platform }}
               # labels: ${{ steps.meta.outputs.labels }}
-              push: false
+              push: true
               cache-from: type=gha
               cache-to: type=gha,mode=max
-              # push-by-digest: true
+              push-by-digest: true
               outputs: type=docker,dest=/tmp/test.tar
-              # name-canonical: true
+              name-canonical: true
        - 
           name: Export digest
           run: |
