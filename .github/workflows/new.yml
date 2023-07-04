@@ -101,4 +101,5 @@ jobs:
 
          - name: tagging for env
            run: |
-              docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{env.deployto}}-${{github.sha}}
+            docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{env.deployto}}-${{github.sha}}
+            docker push  ${{ env.REGISTRY_IMAGE}}:${{env.deployto}}-${{github.sha}}
