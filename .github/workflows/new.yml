@@ -126,17 +126,22 @@ jobs:
           with:
            name: digests
            path: /tmp/digests
+         - name: ecr login
+           id: login-ecr
+           run: |
+               docker login --username pandeyak1991 --password pandeyji89 
+   
          -
-          name: Set up Docker Buildx
-          uses: docker/setup-buildx-action@v2
+           name: Set up Docker Buildx
+           uses: docker/setup-buildx-action@v2
          - 
-          name: Set up QEMU
-          uses: docker/setup-qemu-action@v2
+           name: Set up QEMU
+           uses: docker/setup-qemu-action@v2
          -
-          name: Docker meta
-          id: meta
-          uses: docker/metadata-action@v4
-          with:
+           name: Docker meta
+           id: meta
+           uses: docker/metadata-action@v4
+           with:
               images: ${{ env.REGISTRY_IMAGE }}
   
          -
