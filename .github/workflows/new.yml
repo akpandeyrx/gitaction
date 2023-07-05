@@ -60,17 +60,17 @@ jobs:
       #    with:
       #           name: docker-image
       #           path: /tmp/test.tar
-    # merge:
-    #    name: pushing-merge
-    #    runs-on: ubuntu-latest
-    #    environment:  
-    #     name: ${{ needs.build.outputs.env_name }}
-    #    needs:
-    #      - build
-    #   #  concurrency:
-    #   #     group: $NonProdEnvName
+    merge:
+       name: pushing-merge
+       runs-on: ubuntu-latest
+      #  environment:  
+      #   name: ${{ needs.build.outputs.env_name }}
+       needs:
+         - build
+      #  concurrency:
+      #     group: $NonProdEnvName
 
-    #    steps:
+       steps:
   
     
     #     #  -
@@ -80,11 +80,12 @@ jobs:
     #     #    name: docker-image
     #     #    path: /tmp/
 
-    #      - name: ecr login
-    #        id: login-ecr
-    #        run: |
+         - name: ecr login
+           id: login-ecr
+           run: |
+              echo "I'm using variable ${{ needs.build.outputs.env_name }}"
              
-    #            docker login --username pandeyak1991 --password pandeyji89 
+              #  docker login --username pandeyak1991 --password pandeyji89 
 
 
   
