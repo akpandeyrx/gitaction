@@ -80,11 +80,11 @@ jobs:
 
 
   
-    #      - name: Load Docker image
-    #        run: |
-    #         docker load --input /tmp/test.tar  
+         - name: Load Docker image
+           run: |
+            docker load --input /tmp/test.tar  
 
-    #      - name: tagging for env
-    #        run: |
-    #         docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
-    #         # docker push  ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
+         - name: tagging for env
+           run: |
+            # docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
+            docker push  ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
