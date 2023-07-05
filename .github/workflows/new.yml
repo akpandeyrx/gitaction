@@ -44,7 +44,7 @@ jobs:
        - name: setting up nonprod env
          id: env_name
          run: |
-           echo "NonProdEnvName=NonProd"  >> $GITHUB_OUTPUT
+           echo "set-output NonProdEnvName=NonProd"  
 
 
          
@@ -61,8 +61,8 @@ jobs:
          - build
        environment:  
         name: ${{ needs.build.outputs.env_name }}
-       concurrency:
-          group: $NonProdEnvName
+      #  concurrency:
+      #     group: $NonProdEnvName
 
        steps:
   
