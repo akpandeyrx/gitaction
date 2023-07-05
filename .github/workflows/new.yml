@@ -68,5 +68,5 @@ jobs:
        - name: ecr login
          id: login-ecr
          run: |
-          echo "I'm using variable ${{ needs.build.outputs.ProdEnvName}}"
+          echo "I'm using variable ${{ needs.job2.outputs.ProdEnvName}}"
         
