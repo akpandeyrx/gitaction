@@ -11,7 +11,7 @@ env:
       # URL: pandeyak1991
       # ECR_REPOSITORY: test
       # REGISTRY_IMAGE: pandeyak1991/test
-      NonProdEnvName: ${{vars.test}}
+      # NonProdEnvName: ${{vars.test}}
   
 jobs:
     build:
@@ -41,7 +41,7 @@ jobs:
           name: Set up QEMU
           # uses: docker/setup-qemu-action@v2
           run: 
-              echo ${{env.NonProdEnvName}}
+              echo ${{vars.test}}
       #  -
       #     name: Set up Docker Buildx
       #     uses: docker/setup-buildx-action@v2   
