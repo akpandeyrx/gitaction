@@ -16,8 +16,8 @@ env:
 jobs:
     build:
       runs-on: ubuntu-latest
-      environment: $dep
-      #  name:  $env.dep
+      environment: 
+        name:  $env.dep
       steps:
        -
           name: Checkout
