@@ -63,7 +63,8 @@ jobs:
        runs-on: ubuntu-latest
        needs:
          - build
-       environment:  ${{ needs.build.outputs.env_name }}
+       environment:  
+         name: ${{ needs.build.outputs.env_name }}
       #  concurrency:
       #     group: $NonProdEnvName
 
