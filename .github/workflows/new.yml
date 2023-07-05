@@ -45,7 +45,9 @@ jobs:
          id: env_name
          run: |
            echo "NonProd"  >> $GITHUB_OUTPUT
-
+       - name: echoing
+         run: ${{steps.id.outputs.env_name}}
+      
 
          
 
@@ -76,6 +78,7 @@ jobs:
          - name: ecr login
            id: login-ecr
            run: |
+             
                docker login --username pandeyak1991 --password pandeyji89 
 
 
