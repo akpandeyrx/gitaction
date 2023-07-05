@@ -11,7 +11,7 @@ env:
       # URL: pandeyak1991
       # ECR_REPOSITORY: test
       REGISTRY_IMAGE: pandeyak1991/test
-      NonProdEnvName: NonProd
+      NonProdEnvName: ${{vars.test}}
   
 jobs:
     build:
@@ -73,9 +73,9 @@ jobs:
        runs-on: ubuntu-latest
        needs:
          - build
-       environment: ${{env.NonProdEnvName}}
+       environment:  NonProd
        env:
-          deployto: ${{env.NonProdEnvName}}
+        NonProdEnvName: NonProd 
        steps:
   
     
