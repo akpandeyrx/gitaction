@@ -37,8 +37,7 @@ jobs:
     job2:
       name: pushing-merge
       runs-on: ubuntu-latest
-      environment:  
-        name: ${{ needs.build.outputs.NonProdEnvName }}
+      environment: ${{ needs.build.outputs.NonProdEnvName }}
       needs:
          - build
       concurrency:
@@ -60,8 +59,7 @@ jobs:
     job3:
       name: job3-merge
       runs-on: ubuntu-latest
-      environment:  
-       name: ${{ needs.job2.outputs.ProdEnvName }}
+      environment:   ${{ needs.job2.outputs.ProdEnvName }}
       needs:
         - job2
       concurrency:
