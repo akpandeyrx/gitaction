@@ -23,24 +23,9 @@ jobs:
       #   group: $NonProdEnvName
       outputs:
         output: ${{ steps.name.outputs.env_name }}
+
       steps:
-      #  -
-      #     name: Checkout
-      #     uses: actions/checkout@v3
-   
-      #  -
-      #     name: Set up Docker Buildx
-      #     uses: docker/setup-buildx-action@v2   
-          
-      #  - name: Build and push
-      #    uses: docker/build-push-action@v4
-      #    with:
-      #         push: false
-      #         tags: |
-      #           ${{ env.REGISTRY_IMAGE }}:${{env.NonProdEnvName}}-${{github.sha}}
-      #         cache-from: type=gha
-      #         cache-to: type=gha,mode=max
-      #         outputs: type=docker,dest=/tmp/test.tar
+
        - name: Set output
          id: name
          run: echo "env_name=NonProd" >> $GITHUB_OUTPUT
@@ -61,40 +46,40 @@ jobs:
       #    with:
       #           name: docker-image
       #           path: /tmp/test.tar
-    merge:
-       name: pushing-merge
-       runs-on: ubuntu-latest
-      #  environment:  
-      #   name: ${{ needs.build.outputs.env_name }}
-       needs:
-         - build
-      #  concurrency:
-      #     group: $NonProdEnvName
+    # merge:
+    #    name: pushing-merge
+    #    runs-on: ubuntu-latest
+    #   #  environment:  
+    #   #   name: ${{ needs.build.outputs.env_name }}
+    #    needs:
+    #      - build
+    #   #  concurrency:
+    #   #     group: $NonProdEnvName
 
-       steps:
+    #    steps:
   
     
-    #     #  -
-    #     #   name: Download image
-    #     #   uses: actions/download-artifact@v3
-    #     #   with:
-    #     #    name: docker-image
-    #     #    path: /tmp/
+    # #     #  -
+    # #     #   name: Download image
+    # #     #   uses: actions/download-artifact@v3
+    # #     #   with:
+    # #     #    name: docker-image
+    # #     #    path: /tmp/
 
-         - name: ecr login
-           id: login-ecr
-           run: |
-              echo "I'm using variable ${{ needs.build.outputs.env_name }}"
+    #      - name: ecr login
+    #        id: login-ecr
+    #        run: |
+    #           echo "I'm using variable ${{ needs.build.outputs.env_name }}"
              
-              #  docker login --username pandeyak1991 --password pandeyji89 
+    #           #  docker login --username pandeyak1991 --password pandeyji89 
 
 
   
-    #     #  - name: Load Docker image
-    #     #    run: |
-    #     #     docker load --input /tmp/test.tar  
+    # #     #  - name: Load Docker image
+    # #     #    run: |
+    # #     #     docker load --input /tmp/test.tar  
 
-    #     #  - name: tagging for env
-    #     #    run: |
-    #     #     # docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
-    #     #     docker push  ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
+    # #     #  - name: tagging for env
+    # #     #    run: |
+    # #     #     # docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
+    # #     #     docker push  ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
