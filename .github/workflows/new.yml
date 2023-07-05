@@ -11,12 +11,12 @@ env:
       # URL: pandeyak1991
       # ECR_REPOSITORY: test
       REGISTRY_IMAGE: pandeyak1991/test
-      # NonProdEnvName: ${{vars.NONPRODENVNAME}}
+      dep: test
   
 jobs:
     build:
       runs-on: ubuntu-latest
-      environment: test
+      environment:  ${{vars.NONPRODENVNAME}}
       steps:
        -
           name: Checkout
@@ -52,7 +52,7 @@ jobs:
        runs-on: ubuntu-latest
        needs:
          - build
-       environment: test
+       environment:  ${{vars.NONPRODENVNAME}}
        env:
         NonProdEnvName: ${{vars.NONPRODENVNAME}}
        steps:
@@ -79,4 +79,4 @@ jobs:
          - name: tagging for env
            run: |
             docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
-            docker push  ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
+            # docker push  ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
