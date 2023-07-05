@@ -42,41 +42,41 @@ jobs:
 
          
 
-    #    - name: Upload artifact
-    #      uses: actions/upload-artifact@v3
-    #      with:
-    #             name: docker-image
-    #             path: /tmp/test.tar
-    # merge:
-    #    name: pushing-merge
-    #    runs-on: ubuntu-latest
-    #    needs:
-    #      - build
-    #   #  environment: ${{vars.NONPRODENVNAME}}
-    #    env:
-    #     NonProdEnvName: ${{vars.NONPRODENVNAME}}
-    #    steps:
+       - name: Upload artifact
+         uses: actions/upload-artifact@v3
+         with:
+                name: docker-image
+                path: /tmp/test.tar
+    merge:
+       name: pushing-merge
+       runs-on: ubuntu-latest
+       needs:
+         - build
+       environment: test
+       env:
+        NonProdEnvName: ${{vars.NONPRODENVNAME}}
+       steps:
   
     
-    #      -
-    #       name: Download image
-    #       uses: actions/download-artifact@v3
-    #       with:
-    #        name: docker-image
-    #        path: /tmp/
+         -
+          name: Download image
+          uses: actions/download-artifact@v3
+          with:
+           name: docker-image
+           path: /tmp/
 
-    #     #  - name: ecr login
-    #     #    id: login-ecr
-    #     #    run: |
-    #     #        docker login --username pandeyak1991 --password pandeyji89 
+         - name: ecr login
+           id: login-ecr
+           run: |
+               docker login --username pandeyak1991 --password pandeyji89 
 
 
   
-    #      - name: Load Docker image
-    #        run: |
-    #         docker load --input /tmp/test.tar  
+         - name: Load Docker image
+           run: |
+            docker load --input /tmp/test.tar  
 
-    #      - name: tagging for env
-    #        run: |
-    #         docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
-    #         # docker push  ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
+         - name: tagging for env
+           run: |
+            docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
+            # docker push  ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
