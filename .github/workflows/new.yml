@@ -75,7 +75,7 @@ jobs:
        runs-on: ubuntu-latest
        needs:
          - build
-       environment: ${{vars.NONPRODENVNAME}}
+      #  environment: ${{vars.NONPRODENVNAME}}
        env:
         NonProdEnvName: ${{vars.NONPRODENVNAME}}
        steps:
