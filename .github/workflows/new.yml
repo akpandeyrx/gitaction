@@ -18,9 +18,9 @@ env:
 jobs:
     build:
       runs-on: ubuntu-latest
-      environment:  $NonProdEnvName
+      environment: "NonProdEnvName"
       concurrency:
-        group: ${{env.NonProdEnvName}}
+        group: $NonProdEnvName
 
       steps:
        -
