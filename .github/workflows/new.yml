@@ -44,7 +44,7 @@ jobs:
          with:
               push: false
               tags: |
-                ${{ env.REGISTRY_IMAGE }}:${{vars.NONPRODENVNAME}}}}-${{github.sha}}
+                ${{ env.REGISTRY_IMAGE }}:${{vars.NONPRODENVNAME}}-${{github.sha}}
               cache-from: type=gha
               cache-to: type=gha,mode=max
               outputs: type=docker,dest=/tmp/test.tar
