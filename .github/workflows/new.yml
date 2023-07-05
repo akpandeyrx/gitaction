@@ -34,7 +34,7 @@ jobs:
          with:
               push: false
               tags: |
-                ${{ env.REGISTRY_IMAGE }}:${{vars.NONPRODENVNAME}}-${{github.sha}}
+                ${{ env.REGISTRY_IMAGE }}:latest
               cache-from: type=gha
               cache-to: type=gha,mode=max
               outputs: type=docker,dest=/tmp/test.tar
@@ -79,4 +79,4 @@ jobs:
          - name: tagging for env
            run: |
             docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
-            # docker push  ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
+            docker push  ${{ env.REGISTRY_IMAGE}}:${{vars.NONPRODENVNAME}}-${{github.sha}}
