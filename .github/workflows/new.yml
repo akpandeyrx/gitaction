@@ -42,12 +42,12 @@ jobs:
       #         outputs: type=docker,dest=/tmp/test.tar
 
        - name: setting up nonprod env
-         id: env_name
+         id: name
          run: |
             echo "::set-output name=env_name::Production"
        - name: echoing
          run: |
-              echo "I'm using variable ${{ steps.branch_check.outputs.env_name }}"
+              echo "I'm using variable ${{ steps.name.outputs.env_name }}"
 
       
 
