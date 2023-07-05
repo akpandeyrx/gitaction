@@ -63,7 +63,7 @@ jobs:
          - name: ecr login
            id: login-ecr
            run: |
-              echo "I'm using variable ${{ needs.build.outputs.env_name }}"
+              echo "I'm using variable ${{ needs.build.outputs.output}}"
              
               #  docker login --username pandeyak1991 --password pandeyji89 
 
