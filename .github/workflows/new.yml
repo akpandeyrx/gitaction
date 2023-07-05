@@ -10,7 +10,7 @@ on:
 env:
       # URL: pandeyak1991
       # ECR_REPOSITORY: test
-      REGISTRY_IMAGE: pandeyak1991/test
+      # REGISTRY_IMAGE: pandeyak1991/test
       NonProdEnvName: ${{vars.test}}
   
 jobs:
