@@ -75,7 +75,7 @@ jobs:
          - build
        environment:  NonProd
        env:
-        NonProdEnvName: NonProd 
+        NonProdEnvName: ${{vars.test}} 
        steps:
   
     
