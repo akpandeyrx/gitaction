@@ -19,7 +19,7 @@ jobs:
     build:
       runs-on: ubuntu-latest
       environment: 
-        name: ${{NonProdEnvName}}
+        name: $NonProdEnvName
       concurrency:
         group: $NonProdEnvName
 
