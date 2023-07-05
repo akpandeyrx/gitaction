@@ -44,7 +44,7 @@ jobs:
        - name: setting up nonprod env
          id: name
          run: |
-            echo "::set-output name=env_name::Production"
+            echo "::set-output name=env_name::NonProd"
        - name: echoing
          run: |
               echo "I'm using variable ${{ steps.name.outputs.env_name }}"
