@@ -44,13 +44,10 @@ jobs:
        - name: setting up nonprod env
          id: env_name
          run: |
-          #  NonProdEnvName=NonProd
-           echo "NonProdEnvName=NonProd" >> $GITHUB_OUTPUT
-
-           echo "$NonProd"  >> $GITHUB_OUTPUT
+            echo "::set-output name=env_name::Production"
        - name: echoing
-         run: echo ${{steps.env_name.outputs}}
-              # echo "${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}" >> $GITHUB_OUTPUT
+         run: |
+              echo "I'm using variable ${{ steps.branch_check.outputs.env_name }}"
 
       
 
