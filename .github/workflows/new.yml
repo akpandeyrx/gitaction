@@ -18,53 +18,57 @@ env:
 jobs:
     build:
       runs-on: ubuntu-latest
-      # environment: "NonProdEnvName"
-      # concurrency:
-      #   group: $NonProdEnvName
       outputs:
-        env_name: ${{ steps.name.outputs.env_name }}
+        NonProdEnvName: ${{ steps.name.outputs.NonProdEnvName }}
 
       steps:
 
        - name: Set output
          id: name
-         run: echo "env_name=NonProd" >> $GITHUB_OUTPUT
-      #  - name: setting up nonprod env
-      #    id: name
-      #    run: |
-      #       echo "::set-output name=env_name::NonProd"
+         run: echo "NonProdEnvName=NonProd" >> $GITHUB_OUTPUT
+
        - name: echoing
          run: |
-              echo "I'm using variable ${{ steps.name.outputs.env_name }}"
+              echo "I'm using variable ${{ steps.name.outputs.NonProdEnvName }}"
 
       
 
         
-    merge:
-       name: pushing-merge
-       runs-on: ubuntu-latest
-       environment:  
-        name: ${{ needs.build.outputs.env_name }}
-       needs:
+    job2:
+      name: pushing-merge
+      runs-on: ubuntu-latest
+      environment:  
+        name: ${{ needs.build.outputs.NonProdEnvName }}
+      needs:
          - build
-    #   #  concurrency:
-    #   #     group: $NonProdEnvName
+      concurrency:
+          group: ${{ needs.build.outputs.NonProdEnvName }}
+        
+      outputs:
+          ProdEnvName: ${{ steps.name.outputs.ProdEnvName }}
 
-       steps:
+      steps:
          - name: ecr login
            id: login-ecr
            run: |
-              echo "I'm using variable ${{ needs.build.outputs.env_name}}"
+              echo "I'm using variable ${{ needs.build.outputs.NonProdEnvName}}"
+         - name: Set output
+           id: name
+           run: echo "ProdEnvName=Prod" >> $GITHUB_OUTPUT
              
-              #  docker login --username pandeyak1991 --password pandeyji89 
-
-
-  
-    # #     #  - name: Load Docker image
-    # #     #    run: |
-    # #     #     docker load --input /tmp/test.tar  
-
-    # #     #  - name: tagging for env
-    # #     #    run: |
-    # #     #     # docker tag ${{ env.REGISTRY_IMAGE}}:latest ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
-    # #     #     docker push  ${{ env.REGISTRY_IMAGE}}:${{env.NonProdEnvName}}-${{github.sha}}
+####
+    job3:
+      name: job3-merge
+      runs-on: ubuntu-latest
+      environment:  
+       name: ${{ needs.job2.outputs.ProdEnvName }}
+      needs:
+        - job2
+      concurrency:
+       group: ${{ needs.job2.outputs.ProdEnvName }}
+      steps:
+       - name: ecr login
+         id: login-ecr
+         run: |
+          echo "I'm using variable ${{ needs.build.outputs.ProdEnvName}}"
+        
