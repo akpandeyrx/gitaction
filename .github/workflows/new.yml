@@ -16,7 +16,7 @@ env:
 jobs:
     build:
       runs-on: ubuntu-latest
-      environment: $env.dep
+      environment: dep
       #  name:  $env.dep
       steps:
        -
