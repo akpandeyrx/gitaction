@@ -61,10 +61,10 @@ jobs:
     merge:
        name: pushing-merge
        runs-on: ubuntu-latest
+       environment:  
+        name: ${{ needs.build.outputs.env_name }}
        needs:
          - build
-       environment:  
-         name: ${{ needs.build.outputs.env_name }}
       #  concurrency:
       #     group: $NonProdEnvName
 
