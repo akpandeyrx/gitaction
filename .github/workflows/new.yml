@@ -12,8 +12,8 @@ env:
       # ECR_REPOSITORY: test
       REGISTRY_IMAGE: pandeyak1991/test
       # dep: NonProd
-      NonProdEnvName: NonProd
-      ProdEnvName: Prod
+      # NonProdEnvName: NonProd
+      # ProdEnvName: Prod
   
 jobs:
     build:
