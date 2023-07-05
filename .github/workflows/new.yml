@@ -18,8 +18,8 @@ env:
 jobs:
     build:
       runs-on: ubuntu-latest
-      environment:  ${{NonProdEnvName}}
-        # name: $NonProdEnvName
+      environment: 
+        name: $NonProdEnvName
       concurrency:
         group: $NonProdEnvName
 
@@ -40,7 +40,7 @@ jobs:
          with:
               push: false
               tags: |
-                ${{ env.REGISTRY_IMAGE }}:${{vars.NonProdEnvName}}-${{github.sha}}
+                ${{ env.REGISTRY_IMAGE }}:${{env.NonProdEnvName}}-${{github.sha}}
               cache-from: type=gha
               cache-to: type=gha,mode=max
               outputs: type=docker,dest=/tmp/test.tar
