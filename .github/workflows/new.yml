@@ -11,7 +11,7 @@ env:
       # URL: pandeyak1991
       # ECR_REPOSITORY: test
       REGISTRY_IMAGE: pandeyak1991/test
-      dep: test
+      dep: NonProd
   
 jobs:
     build:
@@ -37,7 +37,7 @@ jobs:
          with:
               push: false
               tags: |
-                ${{ env.REGISTRY_IMAGE }}:${{vars.NONPRODENVNAME}}-${{github.sha}}
+                ${{ env.REGISTRY_IMAGE }}:${{env.dep}}-${{github.sha}}
               cache-from: type=gha
               cache-to: type=gha,mode=max
               outputs: type=docker,dest=/tmp/test.tar
