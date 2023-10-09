@@ -1,15 +1,30 @@
-on  
-  push
-   - gh-action
+# on  
+#   push:
+#    - gh-action
    
+# jobs:
+#   build:
+#   name: Code Analysis
+#   runs-on: macos-13-xlarge
+#   timeout-minutes: 15
+#   steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: aws cli check
+#         run: AWScli
+on:
+  pull_request:
+  
+    branches:
+      - main
+      - master
+      - release*
+      - develop
 jobs:
   build:
-  name: Code Analysis
-  runs-on: macos-13-xlarge
-  timeout-minutes: 15
-  steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: aws cli check
-        run: AWScli
+    runs-on:  macos-13-xlarge
+  
+    steps:
+       - name: aws cli check
+         run: AWScli
