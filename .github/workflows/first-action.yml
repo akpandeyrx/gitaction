@@ -1,13 +1,13 @@
 on  
   push
    - gh-action
-
+   
 jobs:
+  build:
   name: Code Analysis
   runs-on: macos-13-xlarge
   timeout-minutes: 15
-
-    steps:
+  steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
