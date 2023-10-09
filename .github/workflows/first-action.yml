@@ -3,11 +3,10 @@ on
    - gh-action
 
 jobs:
-  setup:
-    name: IOS Build & Deploy
-    runs-on: macos-13-xlarge
-    timeout-minutes: 20
-    environment: Protected
+  name: Code Analysis
+  runs-on: macos-13-xlarge
+  timeout-minutes: 15
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
