@@ -14,13 +14,13 @@
 #       - name: aws cli check
 #         run: AWScli
 on:
-  pull_request:
+  push:
   
     branches:
       - main
       - master
       - release*
-      - develop
+      - gh-action
 jobs:
   build:
     runs-on:  macos-13-xlarge
